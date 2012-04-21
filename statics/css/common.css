@@ -1,0 +1,114 @@
+body,html,h1
+{
+    margin:0;
+    padding:0;
+}
+body
+{
+/*    background: #000 url(/statics/images/449.jpg) repeat scroll 0 0;*/
+    background: #1f1f1f;
+    font-size: 16px;
+    color: #f0f0f0;
+    padding:20px;
+    font-family: sans-serif;
+    border-top: 1px solid black;
+}
+a
+{
+    color: #3698e3;
+    text-decoration: none;
+}
+h1
+{
+    font-size: 30px;
+    text-align: center;
+    border-bottom: 1px solid #000;
+    padding-bottom: 20px;
+    font-weight: normal;
+}
+h1 a
+{
+    font-weight: bold;
+}
+h2
+{
+    font-size: 20px;
+}
+h3
+{
+    font-size: 18px;
+}
+._404
+{
+    color: #ccc;
+    font-size: 140px;
+    line-height: 140px;
+    text-shadow: 1px 1px 20px #ddd;
+    text-align: center;
+}
+.label
+{
+    color: #dd7b3d;
+}
+small
+{
+    color: #aaa;
+}
+ol, div, span
+{
+    line-height: 22px;
+}
+.api_call_return
+{
+    background: #282828;
+    margin: 8px 0px;
+    padding: 8px;
+}
+
+.api_call_raw,
+.api_call_result
+{
+    font-size: 14px;
+    padding: 4px;
+}
+
+.video_item
+{
+    padding: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    display: inline-block;
+    text-align: center;
+    width: 160px;
+    background: #434343;
+}
+
+.video_item:hover span
+{
+    color: #fff;
+}
+
+.logo_img_1
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.logo_img_2
+{
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.main_content
+{
+    border-top: 1px solid #333;
+    padding-top: 14px;
+}
+
+.api_actions span.api_action
+{
+    line-height: 24px;
+}
