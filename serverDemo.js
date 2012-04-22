@@ -1,7 +1,9 @@
 /*************************************************
  *
  * ADVANCED SERVER DEMO by Classtar,
- * Based on NodeJS.
+ * 
+ * Based on NodeJS (http://nodejs.org/api/)
+ * Based on Swig (https://github.com/paularmstrong/swig/tree/master/docs#readme)
  *
 **************************************************/
 
