@@ -1,7 +1,17 @@
 var path = require("path"),
-    tmpl = require("../tmpl-node"),
+    swig = require("swig"),
     fs = require("fs");
 
+swig.init({
+    allowErrors: false,
+    autoescape: true,
+    encoding: 'utf8',
+    filters: {},
+    root: '/',
+    tags: {},
+    extensions: {},
+    tzOffset: 0
+});
 
 /*************************************************
  *
@@ -23,6 +33,12 @@ var View = function(conf)
         return this;
     }
 
+    this.onError = function()
+    {
+        this.response.writeHead(404, {"Content-Type": "text/plain"});
+        this.response.end("404 Not Found!");
+    };
+
     this.render = function()
     {
         var filename = path.join(process.cwd(), this.conf.templateDir + this.template);
@@ -31,33 +47,30 @@ var View = function(conf)
         {
             if(!exists)
             {
-                this.response.writeHead(404, {"Content-Type": "text/plain"});
-                this.response.write("404 Not Found!");
-                this.response.end();
-                return;
+                return this.onError();
             }
 
-            fs.readFile(filename, "utf8", function(err, file)
+            this.renderByReadfile(filename);
+
+        }.bind(this));
+    };
+
+    this.renderByReadfile = function(filename)
+    {
+        fs.readFile(filename, "utf8", function(err, file)
+        {
+            if(err)
             {
-                if(err)
-                {
-                    this.response.writeHead(404, {"Content-Type": "text/html"});
-                    this.response.write("404 Not Found!");
-                    this.response.end();
-                    return;
-                }
+                return this.onError();
+            }
 
-                var output = tmpl.compile(file)({'D': this.templateDatas || {}});
-                // output = "hello world!\nnew line";
-                console.log(output);
+            var output = swig.compile(file)(this.templateDatas);
 
-                this.response.writeHead(this.status, {
-                    "Content-Type": "text/html"
-                    // 'Content-Length': Buffer.byteLength(output, 'utf8')
-                });
-                // this.response.write(output, "utf8");
-                this.response.end(output, "utf8");
-            }.bind(this));
+            this.response.writeHead(this.status, {
+                "Content-Type": "text/html",
+                'Content-Length': Buffer.byteLength(output, 'utf8')
+            });
+            this.response.end(output, "utf8");
         }.bind(this));
     };
 }

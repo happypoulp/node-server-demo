@@ -20,38 +20,41 @@ var StaticView = function(conf)
         return this;
     }
 
+    this.onError = function()
+    {
+        this.response.writeHead(404, {"Content-Type": "text/plain"});
+        this.response.end("404 Not Found!");
+    };
+
     this.render = function()
     {
-        var filename = path.join(process.cwd(), this.ressourcePath);
+        this.filename = path.join(process.cwd(), this.ressourcePath);
 
-        path.exists(filename, function(exists)
+        path.exists(this.filename, function(exists)
         {
             if(!exists)
             {
-                this.response.writeHead(404, {"Content-Type": "text/plain"});
-                this.response.write("404 Not Found!");
-                this.response.end();
-                return;
+                return this.onError();
             }
 
-            fs.readFile(filename, "binary", function(err, file)
-            {
-                if(err)
-                {
-                    this.response.writeHead(404, {"Content-Type": "text/html"});
-                    this.response.write("404 Not Found!");
-                    this.response.end();
-                    return;
-                }
+            var readStream = fs.createReadStream(this.filename, {
+                encoding: 'utf8'
+            });
 
-                var contentType = {'css': 'text/css', 'js': 'text/javascript', 'png': 'image/png', 'jpg': 'image/jpg', 'gif': 'image/gif'}[filename.replace(/.+\.([a-z]+)$/, '$1')] || 'text/html';
+            readStream.on('error', this.onError);
+
+            readStream.once('open', function ()
+            {
+                var contentType = {'css': 'text/css', 'js': 'text/javascript', 'png': 'image/png', 'jpg': 'image/jpg', 'gif': 'image/gif'}[this.filename.replace(/.+\.([a-z]+)$/, '$1')] || 'text/html';
 
                 this.response.writeHead(200, {
-                    "Content-Type": contentType,
+                    "Content-Type": contentType
                 });
-                this.response.write(file, "binary");
-                this.response.end();
+
             }.bind(this));
+
+            readStream.pipe(this.response);
+
         }.bind(this));
     };
 }

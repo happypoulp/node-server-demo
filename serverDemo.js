@@ -112,3 +112,4 @@ NjServer.new().init(CONF, ROUTES, CONTROLLERS).start();
 // var c = Controller.new(CONF);
 // console.log(c);
 // c.setControllerName(r.getControllerName());
+
