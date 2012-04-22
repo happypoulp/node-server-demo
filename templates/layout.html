@@ -1,0 +1,17 @@
+<!doctype html>
+<html>
+    <head>
+        <title>{% block title %}Server Demo{% endblock %}</title>
+        <link rel="shortcut icon" type="image/x-icon" href="http://www.dailymotion.com/images/favicon.ico" />
+        <link rel="stylesheet" href="/statics/css/common.css" type="text/css" />
+    </head>
+    <body>
+        <div class="body_content">
+            <h1><a href="/">Server demo</a> with <a href="http://nodejs.org/api/" target="_blank">NodeJS</a></h1>
+
+            <div class="main_content">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    </body>
+</html>

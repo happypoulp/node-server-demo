@@ -6,10 +6,9 @@ var View = require('./view'),
  * CONTROLLER CLASS
  *
 **************************************************/
-var Controller = function(conf)
+var Controller = function()
 {
     this.controllers = {};
-    this.conf = conf;
 
     this.setControllers = function(controllers)
     {
@@ -42,11 +41,11 @@ var Controller = function(conf)
                     controllerDatas.datas[key] = CONFDatas[key];
                 }
 
-                View.new(this.conf).init(controllerDatas, response).render();
+                View.new().init(controllerDatas, response).render();
             }
             else
             {
-                StaticView.new(this.conf).init(controllerDatas, response).render();
+                StaticView.new().init(controllerDatas, response).render();
             }
         }.bind(this));
 
@@ -54,8 +53,8 @@ var Controller = function(conf)
     };
 }
 
-module.exports.new = function(conf)
+module.exports.new = function()
 {
-    return new Controller(conf);
+    return new Controller();
 };
 

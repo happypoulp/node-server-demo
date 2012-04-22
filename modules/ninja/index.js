@@ -5,15 +5,13 @@ var http = require("http"),
 
 var NjServer = function()
 {
-    this.conf = null;
     this.router = null;
     this.controller = null;
 
-    this.init = function(conf, routes, controllers)
+    this.init = function(routes, controllers)
     {
-        this.conf = conf;
-        this.router = router.new(conf);
-        this.controller = Controller.new(conf);
+        this.router = router.new();
+        this.controller = Controller.new();
 
         this.router.setRoutes(routes);
         this.controller.setControllers(controllers);
@@ -28,9 +26,9 @@ var NjServer = function()
     **************************************************/
     this.start = function()
     {
-        if (!this.conf || !this.router || !this.controller)
+        if (!global.CONF || !this.router || !this.controller)
         {
-            console.log('UNABLE TO START SERVER : MISSING conf, Routes or Controllers...');
+            console.log('UNABLE TO START SERVER : MISSING global.CONF, Routes or Controllers...');
             return;
         }
 
@@ -42,9 +40,9 @@ var NjServer = function()
 
             this.controller.setControllerName(controllerName);
             this.controller.run(request, response);
-        }.bind(this)).listen(this.conf.serverPort);
+        }.bind(this)).listen(CONF.serverPort);
 
-        util.puts('Server running at http://' + this.conf.serverHost + ':' + this.conf.serverPort);
+        util.puts('Server running at http://' + CONF.serverHost + ':' + CONF.serverPort);
     }
 }
 

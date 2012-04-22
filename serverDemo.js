@@ -5,22 +5,24 @@
  *
 **************************************************/
 
-var cookie = require("./modules/cookie-node"),
-    NjServer = require("./modules/ninja"); // My custom server
-
 
 /*************************************************
  *
  * GLOBAL CONFIGURATION
  *
 **************************************************/
-var CONF = {
+var root = process.cwd(); 
+
+global.CONF = {
     serverHost: '127.0.0.1',
     serverPort: 8000,
     serverURL: this.serverHost + ':' + this.serverPort,
-    templateDir: 'templates/'
+    templateRoot: root + '/templates/',
+    staticRoot: root
 };
 
+var cookie = require("./modules/cookie-node"),
+    NjServer = require("./modules/ninja"); // My custom server
 
 /*************************************************
  *
@@ -91,9 +93,7 @@ var CONTROLLERS = {
 };
 
 
-NjServer.new().init(CONF, ROUTES, CONTROLLERS).start();
-
-
+NjServer.new().init(ROUTES, CONTROLLERS).start();
 
 
 

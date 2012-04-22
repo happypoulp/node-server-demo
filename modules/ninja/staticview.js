@@ -1,16 +1,13 @@
 var path = require("path"),
     fs = require("fs");
 
-
 /*************************************************
  *
  * STATICVIEW CLASS
  *
 **************************************************/
-var StaticView = function(conf)
+var StaticView = function()
 {
-    this.conf = conf;
-
     this.init = function(controllerDatas, response)
     {
         this.response = response;
@@ -28,8 +25,8 @@ var StaticView = function(conf)
 
     this.render = function()
     {
-        this.filename = path.join(process.cwd(), this.ressourcePath);
-
+        this.filename = path.join(CONF.staticRoot, this.ressourcePath);
+        
         path.exists(this.filename, function(exists)
         {
             if(!exists)
@@ -59,7 +56,7 @@ var StaticView = function(conf)
     };
 }
 
-module.exports.new = function(conf)
+module.exports.new = function()
 {
-    return new StaticView(conf);
+    return new StaticView();
 };

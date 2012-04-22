@@ -7,10 +7,9 @@ var url = require("url"),
  * ROUTER CLASS
  *
 **************************************************/
-var Router = function(conf)
+var Router = function()
 {
     this.routes = {};
-    this.conf = conf;
 
     this.setRoutes = function(routes)
     {
@@ -36,7 +35,7 @@ var Router = function(conf)
     };
 }
 
-module.exports.new = function(conf)
+module.exports.new = function()
 {
-    return new Router(conf);
+    return new Router();
 };

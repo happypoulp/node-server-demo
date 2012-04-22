@@ -3,11 +3,11 @@ var path = require("path"),
     fs = require("fs");
 
 swig.init({
-    allowErrors: false,
+    allowErrors: true,
     autoescape: true,
     encoding: 'utf8',
     filters: {},
-    root: '/',
+    root: global.CONF ? CONF.templateRoot : '/',
     tags: {},
     extensions: {},
     tzOffset: 0
@@ -18,10 +18,8 @@ swig.init({
  * VIEW CLASS
  *
 **************************************************/
-var View = function(conf)
+var View = function()
 {
-    this.conf = conf;
-
     this.init = function(controllerDatas, response)
     {
         this.templateDatas = controllerDatas.datas;
@@ -41,41 +39,17 @@ var View = function(conf)
 
     this.render = function()
     {
-        var filename = path.join(process.cwd(), this.conf.templateDir + this.template);
+        var output = swig.compileFile(this.template).render(this.templateDatas);
 
-        path.exists(filename, function(exists)
-        {
-            if(!exists)
-            {
-                return this.onError();
-            }
-
-            this.renderByReadfile(filename);
-
-        }.bind(this));
-    };
-
-    this.renderByReadfile = function(filename)
-    {
-        fs.readFile(filename, "utf8", function(err, file)
-        {
-            if(err)
-            {
-                return this.onError();
-            }
-
-            var output = swig.compile(file)(this.templateDatas);
-
-            this.response.writeHead(this.status, {
-                "Content-Type": "text/html",
-                'Content-Length': Buffer.byteLength(output, 'utf8')
-            });
-            this.response.end(output, "utf8");
-        }.bind(this));
+        this.response.writeHead(this.status, {
+            "Content-Type": "text/html",
+            'Content-Length': Buffer.byteLength(output, 'utf8')
+        });
+        this.response.end(output, "utf8");
     };
 }
 
-module.exports.new = function(conf)
+module.exports.new = function()
 {
-    return new View(conf);
+    return new View();
 };

@@ -1,16 +1,7 @@
-<html>
-    <head>
-        <title>Server demo - 404</title>
-        <link rel="shortcut icon" type="image/x-icon" href="http://www.dailymotion.com/images/favicon.ico" />
-        <link rel="stylesheet" href="/statics/css/common.css" type="text/css" />
-    </head>
-    <body>
-        <div class="body_content">
-            <h1><a href="/">Server demo</a> with <a href="http://nodejs.org/api/" target="_blank">NodeJS</a></h1>
+{% extends 'layout.html' %}
 
-            <div class="main_content">
-                <div class="_404">404</div>
-            </div>
-        </div>
-    </body>
-</html>
+{% block title %}404 - Server Demo{% endblock %}
+
+{% block content %}
+    <div class="_404">404</div>
+{% endblock %}
